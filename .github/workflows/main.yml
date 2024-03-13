@@ -6,8 +6,6 @@ on:
       - closed
     branches: 
       - dev
-    paths: 
-      - ./upload/**
 jobs: 
   build-and-push:
     name: Build and Push to ECR
