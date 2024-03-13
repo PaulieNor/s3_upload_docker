@@ -7,7 +7,7 @@ on:
     branches: 
       - dev
     paths: 
-      - ./upload/*
+      - ./upload/**
 jobs: 
   build-and-push:
     name: Build and Push to ECR
