@@ -81,7 +81,7 @@ def upload_file():
             output = post_to_s3_bucket(file, filename)
             if output:
                 flash("File uploaded")
-                return 'File uploaded'
+                return 'File uploaded.'
             else:
                 return 'Bad upload to S3.'
             
