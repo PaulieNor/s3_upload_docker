@@ -2,6 +2,8 @@
 name: Build and Push Django Image to AWS ECR
 on: 
   pull-request:
+    types:
+      - closed
     branches: 
       - dev
     paths: 
