@@ -1,15 +1,17 @@
 import flask
-from flask import Flask, flash, request, redirect, render_template
+from flask import Flask, flash, request, redirect, render_template, url_for
 import logging
 from werkzeug.utils import secure_filename
 import boto3
 from botocore.exceptions import ClientError
+import os
 
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+app.config['SECRET_KEY'] = os.urandom(12).hex()
 
 
 
@@ -32,7 +34,7 @@ def post_to_s3_bucket(file, object_name):
                                                             ExpiresIn = expiry)
                 
             except ClientError as e:
-                logging.error(e)
+                app.logger.error(e)
                 return None
             
             return response
@@ -53,36 +55,40 @@ def post_to_s3_bucket(file, object_name):
 
         files = {'file': (object_name, file)}
         http_response = requests.post(presigned_url['url'], data=presigned_url['fields'], files=files)
-        logging.info(f'File upload HTTP status code: {http_response.status_code}')
+        app.logger.info(f'File upload HTTP status code: {http_response.status_code}')
     
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/upload', methods = ["POST"])
+@app.route('/upload_file', methods = ["POST", "GET"])
 def upload_file():
+    app.logger.debug("Uploading file.")
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('Empty file')
-            return redirect(request.url)
+            return 'Empty file'
         file = request.files['file']
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
-            return redirect(request.url)
+            return 'No selected file'
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             output = post_to_s3_bucket(file, filename)
             if output:
                 flash("File uploaded")
-                return redirect(request.url)
+                return 'File uploaded'
+            else:
+                return 'Bad upload to S3.'
             
         else:
+            app.logger.warning("Incorrect file type.")
             flash("Incorrect file type (Only accepted file types: 'png', 'jpg', 'jpeg', 'gif')")
-            return redirect(request.url)
+            return 'No selected file'
 
 
 
