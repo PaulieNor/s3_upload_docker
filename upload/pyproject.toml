@@ -1,5 +1,5 @@
 [project]
-name = "s3_upload_project"
+name = "upload_flask"
 version = "1.0.0"
 description = "A containerised website that uploads and displays jpegs in an AWS S3 bucket."
 dependencies = [

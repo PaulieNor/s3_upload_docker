@@ -64,7 +64,7 @@ def index():
 
 @app.route('/upload_file', methods = ["POST", "GET"])
 def upload_file():
-    app.logger.debug("Uploading file.")
+    app.logger.info("Uploading file.")
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:

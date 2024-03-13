@@ -7,3 +7,5 @@ main:
     --name "aws-tfm-bucket-name" \
     --value "{$AWS_TFM_REMOTE_BUCKET_NAME}" \
     --type String 
+
+	docker build s3-upload ./upload
