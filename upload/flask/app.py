@@ -1,12 +1,12 @@
 import flask
-from flask import Flask, flash, request, redirect
+from flask import Flask, flash, request, redirect, render_template
 import logging
 from werkzeug.utils import secure_filename
 import boto3
 from botocore.exceptions import ClientError
 
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
@@ -56,6 +56,9 @@ def post_to_s3_bucket(file, object_name):
         logging.info(f'File upload HTTP status code: {http_response.status_code}')
     
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/upload', methods = ["POST"])
 def upload_file():
@@ -78,11 +81,13 @@ def upload_file():
                 return redirect(request.url)
             
         else:
-            flash("Incorrect file type (Only accepted file types: 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif')")
+            flash("Incorrect file type (Only accepted file types: 'png', 'jpg', 'jpeg', 'gif')")
             return redirect(request.url)
 
 
 
-if __name__ == "__name__":
+if __name__ == "__main__":
 
-    Flask(app)
+
+    logging.info("Starting app.")
+    app.run()
