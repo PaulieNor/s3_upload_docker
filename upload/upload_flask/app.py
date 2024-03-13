@@ -94,6 +94,8 @@ def upload_file():
 
 if __name__ == "__main__":
 
+    from waitress import serve
+
 
     logging.info("Starting app.")
-    app.run()
+    serve(app, host="127.0.0.1", port=8080)
