@@ -10,4 +10,4 @@ COPY . /app
 EXPOSE 5000
 RUN pip install .
 
-ENTRYPOINT ["python ./app.py"]
+ENTRYPOINT ["python", "app.py"]
