@@ -40,29 +40,6 @@ def post_to_s3_bucket(file, object_name):
                 return None
             
             return response
-        
-
-        def upload_file_to_s3(file, bucket_name, acl="public-read"):
-
-            s3_client = boto3.client('s3')
-            try:
-                s3_client.upload_fileobj(
-                    file,
-                    bucket_name,
-                    file.filename,
-                    ExtraArgs={
-                        "ContentType": file.content_type
-                    }
-                )
-
-            except ClientError as e:
-                # This is a catch all exception, edit this part to fit your needs.
-                logging.error(e)
-                return e
-            
-
-         # after upload file to s3 bucket, return filename of the uploaded file
-            return file.filename
 
 
         ssm_client = boto3.client('ssm')
@@ -85,8 +62,6 @@ def post_to_s3_bucket(file, object_name):
 
 
         app.logger.info(message)
-
-        # upload_file_to_s3(file, bucket_name)
 
         return message
     
