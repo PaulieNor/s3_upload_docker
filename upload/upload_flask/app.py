@@ -40,6 +40,28 @@ def post_to_s3_bucket(file, object_name):
                 return None
             
             return response
+        
+
+        def upload_file_to_s3(file, bucket_name, acl="public-read"):
+            try:
+                s3.upload_fileobj(
+                    file,
+                    bucket_name,
+                    file.filename,
+                    ExtraArgs={
+                        "ACL": acl,
+                        "ContentType": file.content_type
+                    }
+                )
+
+            except Exception as e:
+                # This is a catch all exception, edit this part to fit your needs.
+                print("Something Happened: ", e)
+                return e
+            
+
+         # after upload file to s3 bucket, return filename of the uploaded file
+            return file.filename
 
 
         ssm_client = boto3.client('ssm')
@@ -50,19 +72,22 @@ def post_to_s3_bucket(file, object_name):
         except ClientError as e:
             logging.error(e)
             return None
-
+        """
         presigned_url = get_presigned_url(bucket_name, object_name)
 
         import requests
 
         files = {'file': (object_name, file)}
 
-
-
         http_response = requests.post(presigned_url['url'], data=presigned_url['fields'], files=files)
         message = f"File upload HTTP response: {http_response}"
+
+
         app.logger.info(message)
-        return str(message)
+        """
+
+
+        return upload_file_to_s3(file, bucket_name)
     
 
 @app.route('/')
