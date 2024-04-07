@@ -6,7 +6,8 @@ dependencies = [
     "flask",
     "boto3",
     "botocore",
-    "waitress"
+    "waitress",
+    "requests"
 ]
 
 [build-system]
