@@ -43,8 +43,10 @@ def post_to_s3_bucket(file, object_name):
         
 
         def upload_file_to_s3(file, bucket_name, acl="public-read"):
+
+            s3_client = boto3.client('s3')
             try:
-                s3.upload_fileobj(
+                s3_client.upload_fileobj(
                     file,
                     bucket_name,
                     file.filename,
@@ -54,9 +56,9 @@ def post_to_s3_bucket(file, object_name):
                     }
                 )
 
-            except Exception as e:
+            except ClientError as e:
                 # This is a catch all exception, edit this part to fit your needs.
-                print("Something Happened: ", e)
+                logging.error(e)
                 return e
             
 
