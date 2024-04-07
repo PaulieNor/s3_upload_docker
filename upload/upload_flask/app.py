@@ -29,9 +29,11 @@ def post_to_s3_bucket(file, object_name):
             try:
                 response = s3_client.generate_presigned_post(bucket_name,
                                                             object_name,
-                                                            Fields = fields,
-                                                            Conditions = conditions,
+                                                            fields = fields
+                                                            conditions = conditions
                                                             ExpiresIn = expiry)
+                
+                app.logger.info(f"Get presigned url response: {response}")
                 
             except ClientError as e:
                 app.logger.error(e)
@@ -54,8 +56,13 @@ def post_to_s3_bucket(file, object_name):
         import requests
 
         files = {'file': (object_name, file)}
+
+
+
         http_response = requests.post(presigned_url['url'], data=presigned_url['fields'], files=files)
-        app.logger.info(f'File upload HTTP status code: {http_response.status_code}')
+        message = f"File upload HTTP response: {http_response}"
+        app.logger.info(message)
+        return str(message)
     
 
 @app.route('/')
