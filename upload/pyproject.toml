@@ -3,7 +3,6 @@ name = "upload_flask"
 version = "1.0.0"
 description = "A containerised website that uploads and displays jpegs in an AWS S3 bucket."
 dependencies = [
-    "logging",
     "flask",
     "boto3",
     "botocore",
