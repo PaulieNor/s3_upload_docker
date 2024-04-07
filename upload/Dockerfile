@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-EXPOSE 5000
+EXPOSE 8080
 RUN pip install .
 
 ENTRYPOINT ["python", "./upload_flask/app.py"]
