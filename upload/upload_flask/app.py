@@ -29,8 +29,8 @@ def post_to_s3_bucket(file, object_name):
             try:
                 response = s3_client.generate_presigned_post(bucket_name,
                                                             object_name,
-                                                            fields = fields
-                                                            conditions = conditions
+                                                            Fields = fields,
+                                                            Conditions = conditions,
                                                             ExpiresIn = expiry)
                 
                 app.logger.info(f"Get presigned url response: {response}")
