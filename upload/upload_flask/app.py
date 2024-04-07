@@ -73,7 +73,7 @@ def post_to_s3_bucket(file, object_name):
         except ClientError as e:
             logging.error(e)
             return None
-        """
+        
         presigned_url = get_presigned_url(bucket_name, object_name)
 
         import requests
@@ -85,10 +85,10 @@ def post_to_s3_bucket(file, object_name):
 
 
         app.logger.info(message)
-        """
 
+        # upload_file_to_s3(file, bucket_name)
 
-        return upload_file_to_s3(file, bucket_name)
+        return message
     
 
 @app.route('/')
