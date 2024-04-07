@@ -51,7 +51,6 @@ def post_to_s3_bucket(file, object_name):
                     bucket_name,
                     file.filename,
                     ExtraArgs={
-                        "ACL": acl,
                         "ContentType": file.content_type
                     }
                 )
