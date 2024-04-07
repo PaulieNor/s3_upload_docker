@@ -10,4 +10,6 @@ COPY . /app
 EXPOSE 8080
 RUN pip install .
 
+COPY . .
+
 ENTRYPOINT ["python", "./upload_flask/app.py"]
