@@ -43,7 +43,7 @@ def post_to_s3_bucket(file, object_name):
         ssm_client = boto3.client('ssm')
 
         try:
-            bucket_name = ssm_client.get_parameter(Name = "upload-bucket-name")
+            bucket_name = ssm_client.get_parameter(Name = "upload-bucket-name")['Parameter']['Name']
             
         except ClientError as e:
             logging.error(e)
