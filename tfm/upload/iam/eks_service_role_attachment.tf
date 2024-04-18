@@ -24,7 +24,7 @@ resource "aws_iam_policy" "assume_role" {
       Resource  = "*",
       Condition = {
         "StringEquals": {
-          "${aws_iam_openid_connect_provider.example.url}:sub": "system:serviceaccount:<namespace>:<service-account-name>"
+          "${var.oidc_provider.url}:sub": "system:serviceaccount:s3-upload:s3-upload-sa"
         }
       }
     }]
@@ -57,9 +57,9 @@ data "aws_iam_policy_document" "assume_role_policy_document" {
 }
 
 
-resource "aws_iam_role" "pod_assume_role_role" {
+resource "aws_iam_role" "s3_upload_role" {
   name               = "${var.env}-eks-pod-upload-role"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = aws_iam_policy.assume_role.policy
 }
 
 resource "aws_iam_role_policy_attachment" "s3_policy_role_attachment" {
