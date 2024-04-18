@@ -4,14 +4,14 @@ module "s3" {
 
 }
 
-
 module "eks" {
   source        = "../upload/eks"
   env           = var.env
   min_size      = 2
   max_size      = 2
   instance_type = "t3.micro"
-  vpc_id = module.network.outputs.vpc_id
+  vpc_id = module.network.vpc_id
+  public_subnet_cidr = module.network.public_subnet_cidr
 
 
 }
@@ -24,6 +24,16 @@ module "network" {
 module "ssm" {
   source                = "../upload/ssm"
   env                   = var.env
-  s3_upload_bucket_name = module.s3.outputs.upload_bucket_name
+  s3_upload_bucket_name = module.s3.upload_bucket_name
+
+}
+
+module "iam" {
+  source                = "../upload/iam"
+  env                   = var.env
+  s3_upload_bucket_name = module.s3.upload_bucket_name
+  account_id = var.account_id
+  oidc_provider = module.eks.oidc_provider
+  eks_cluster = module.eks.eks_cluster
 
 }

@@ -8,8 +8,6 @@ WORKDIR /app
 
 COPY . .
 
-# Copy the current directory contents into the container at /app
-
 EXPOSE 8080
 RUN pip install .
 

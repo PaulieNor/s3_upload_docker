@@ -1,0 +1,5 @@
+awsAccountID: {}
+awsRegion: "eu-west-2"
+imageNameSuffix: "s3-upload"
+imageTag: "latest"
+env: "dev"

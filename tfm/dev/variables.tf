@@ -21,6 +21,10 @@ variable "account_id" {
   type = string
 }
 
-variable "remote_state_store" {
-  type = string
+variable "additional_tags" {
+  
+
+  default = {
+    ManagedBy = "Terraform"
+  }
 }

@@ -9,17 +9,17 @@ terraform {
   required_version = ">= 0.14.9"
 
   backend "s3" {
-    bucket         = var.remote_state_store
+    bucket         = "dev-upload-remote-state-store-2222"
     key            = "upload_s3/terraform.tfstate"
-    region         = var.aws_region
-    profile        = var.aws_profile
-    dynamodb_table = "${var.env}_tf_state_lock"
+    profile = "default"
+    region  = "eu-west-2"
+    dynamodb_table = "dev-s3-upload-tfm-lock"
     encrypt        = true
   }
 }
 
 
 provider "aws" {
-  profile = var.aws_profile
-  region  = var.aws_region
+  profile = "default"
+  region  = "eu-west-2"
 }
