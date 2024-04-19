@@ -15,3 +15,7 @@ variable "oidc_provider" {
 variable "eks_cluster" {
   
 }
+
+variable "ecr_repo_arn" {
+  
+}

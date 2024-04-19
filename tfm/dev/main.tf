@@ -4,6 +4,12 @@ module "s3" {
 
 }
 
+module "ecr" {
+  source = "../upload/ecr"
+  env    = var.env
+
+}
+
 module "eks" {
   source        = "../upload/eks"
   env           = var.env
@@ -38,5 +44,6 @@ module "iam" {
   account_id = var.account_id
   oidc_provider = module.eks.oidc_provider
   eks_cluster = module.eks.eks_cluster
+  ecr_repo_arn = module.ecr.ecr_repo_arn
 
 }

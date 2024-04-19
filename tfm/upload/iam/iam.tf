@@ -20,7 +20,7 @@ resource "aws_iam_policy" "ecr_policy" {
           "ecr:PutImage",
           "ecr:UploadLayerPart"
         ]
-        Resource = "arn:aws:ecr:*:${var.account_id}:repository/*"
+        Resource = "${var.ecr_repo_arn}"
       },
       {
         Sid      = "VisualEditor1"
