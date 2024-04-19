@@ -1,5 +1,5 @@
 output "oidc_provider" {
-  value = aws_iam_openid_connect_provider.oidc_provider
+  value = module.eks.oidc_provider
 }
 
 output "eks_cluster" {

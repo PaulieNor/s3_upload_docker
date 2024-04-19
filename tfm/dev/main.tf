@@ -11,13 +11,16 @@ module "eks" {
   max_size      = 2
   instance_type = "t3.micro"
   vpc_id = module.network.vpc_id
-  public_subnet_cidr = module.network.public_subnet_cidr
+  subnet_ids = module.network.subnet_ids
 
 
 }
 
 module "network" {
   source                = "../upload/network"
+    env           = var.env
+  region                = var.aws_region
+  public_subnets = ["10.0.2.0/24", "10.0.3.0/24"]
   
 }
 
