@@ -24,7 +24,7 @@ def post_to_s3_bucket(file, object_name):
 
         def get_presigned_url(bucket_name, object_name, fields = None, expiry = 3600, conditions = None):
 
-            s3_client = boto3.client('s3')
+            s3_client = boto3.client('s3', region_name = "eu-west-2")
 
             try:
                 response = s3_client.generate_presigned_post(bucket_name,
@@ -40,32 +40,9 @@ def post_to_s3_bucket(file, object_name):
                 return None
             
             return response
-        
-
-        def upload_file_to_s3(file, bucket_name, acl="public-read"):
-
-            s3_client = boto3.client('s3')
-            try:
-                s3_client.upload_fileobj(
-                    file,
-                    bucket_name,
-                    file.filename,
-                    ExtraArgs={
-                        "ContentType": file.content_type
-                    }
-                )
-
-            except ClientError as e:
-                # This is a catch all exception, edit this part to fit your needs.
-                logging.error(e)
-                return e
-            
-
-         # after upload file to s3 bucket, return filename of the uploaded file
-            return file.filename
 
 
-        ssm_client = boto3.client('ssm')
+        ssm_client = boto3.client('ssm', region_name = "eu-west-2")
 
         try:
             bucket_name = ssm_client.get_parameter(Name = "upload-bucket-name")['Parameter']['Value']
@@ -85,8 +62,6 @@ def post_to_s3_bucket(file, object_name):
 
 
         app.logger.info(message)
-
-        # upload_file_to_s3(file, bucket_name)
 
         return message
     
@@ -127,6 +102,9 @@ def upload_file():
 
 if __name__ == "__main__":
 
+
+    # Configuring logs
+    
     from logging.config import dictConfig
 
     dictConfig({
@@ -146,9 +124,6 @@ if __name__ == "__main__":
     })
 
 
-    #from waitress import serve
-
-    #serve(app, host="127.0.0.1", port=8080)
     logging.info("Starting app.")
     app.run(host = '0.0.0.0', port = 8080)
 

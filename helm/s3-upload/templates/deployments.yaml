@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-upload
+  namespace: s3-upload
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s3-upload
+  template:
+    metadata:
+      labels:
+        app: s3-upload
+      annotations:
+        eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.awsAccountID }}:role/{{ .Values.env }}-ecs-upload-role"
+    spec:
+      containers:
+      - name: s3-upload
+        image: "{{ .Values.awsAccountID }}.dkr.ecr.{{ .Values.awsRegion }}.amazonaws.com/{{ .Values.imageNameSuffix }}:{{ .Values.imageTag }}"
+        ports:
+        - containerPort: 80
