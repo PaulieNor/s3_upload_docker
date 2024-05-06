@@ -24,7 +24,7 @@ def post_to_s3_bucket(file, object_name):
 
         def get_presigned_url(bucket_name, object_name, fields = None, expiry = 3600, conditions = None):
 
-            s3_client = boto3.client('s3')
+            s3_client = boto3.client('s3', region_name = "eu-west-2")
 
             try:
                 response = s3_client.generate_presigned_post(bucket_name,
@@ -42,7 +42,7 @@ def post_to_s3_bucket(file, object_name):
             return response
 
 
-        ssm_client = boto3.client('ssm')
+        ssm_client = boto3.client('ssm', region_name = "eu-west-2")
 
         try:
             bucket_name = ssm_client.get_parameter(Name = "upload-bucket-name")['Parameter']['Value']

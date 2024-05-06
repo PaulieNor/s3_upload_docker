@@ -34,7 +34,7 @@ resource "aws_iam_role" "s3_upload_role" {
         Condition = {
           StringEquals = {
             "${var.oidc_provider}:aud" = "sts.amazonaws.com"
-            "${var.oidc_provider}:sub" = "system:serviceaccount:s3-upload:s3-upload-ssa"
+            "${var.oidc_provider}:sub" = "system:serviceaccount:s3-upload:s3-upload-sa"
           }
         }
       }
