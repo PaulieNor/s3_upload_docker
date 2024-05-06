@@ -24,7 +24,7 @@ resource "aws_subnet" "public_subnet" {
     map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.env}}-public-subnet-${data.aws_availability_zones.available.names[count.index]}"
+    Name = "${var.env}-public-subnet-${data.aws_availability_zones.available.names[count.index]}"
     ManagedBy = "Terraform"
   }
 }
@@ -41,7 +41,7 @@ resource "aws_route_table" "public_route_table" {
   }
 
   tags = {
-    Name = "Public Route Table"
+    Name = "${var.env}-rt"
     ManagedBy = "Terraform"
   }
 }

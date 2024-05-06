@@ -43,11 +43,13 @@ resource "aws_iam_policy" "s3_policy" {
         Effect  = "Allow",
         Action  = [
           "s3:PutObject",
-          "s3:GetObject"
+          "s3:GetObject",
+          "ssm:GetParameter",
         ],
         Resource = [
           "arn:aws:s3:::${var.s3_upload_bucket_name}/*",
-          "arn:aws:s3:::${var.s3_upload_bucket_name}/"
+          "arn:aws:s3:::${var.s3_upload_bucket_name}/",
+          "arn:aws:ssm:eu-west-2:798011338410:parameter/upload-bucket-name"
         ]
       }
     ]

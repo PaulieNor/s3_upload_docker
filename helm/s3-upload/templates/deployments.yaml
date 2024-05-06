@@ -20,3 +20,4 @@ spec:
         image: "{{ .Values.awsAccountID }}.dkr.ecr.{{ .Values.awsRegion }}.amazonaws.com/{{ .Values.imageNameSuffix }}:{{ .Values.imageTag }}"
         ports:
         - containerPort: 80
+      serviceAccountName: s3-upload-sa
