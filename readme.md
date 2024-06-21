@@ -1,4 +1,4 @@
-A basic app which uploads images to an S3 bucket and displays the five most recent. This was mainly created to test out functionalities for another, more complex project.
+A basic app which uploads images to an S3 bucket. This was mainly created to test out functionalities for another, more complex project.
 
 Main goals were:
 
