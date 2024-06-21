@@ -15,9 +15,9 @@ main:
 
 	cd ./tfm/dev
 	
-	terraform plan
+	terraform plan -var="upload_bucket_name=dev-s3-upload"
 
-	terraform apply
+	terraform apply -var="upload_bucket_name=dev-s3-upload"
 
 	cd ../../helm
 
