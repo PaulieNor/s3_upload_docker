@@ -78,7 +78,7 @@ def post_to_s3_bucket(file, object_name):
         bucket_name = ssm_client.get_parameter(Name="upload-bucket-name")['Parameter']['Value']
 
     except ClientError as e:
-        logging.error(e)
+        app.logger.error(e)
         return None
 
     presigned_url = get_presigned_url(bucket_name, object_name)
@@ -117,23 +117,28 @@ def upload_file():
         # Check if the post request has the file part
         if 'file' not in request.files:
             flash('Empty file')
+            app.logger.info('Empty file')
             return 'Empty file'
         file = request.files['file']
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
+            app.logger.info('No selected file')
             return 'No selected file'
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             output = post_to_s3_bucket(file, filename)
             if output:
                 flash("File uploaded")
+                app.logger.info('File uploaded')
                 return 'File uploaded'
             else:
+                flash('Bad upload to S3.')
+                app.logger.error('Bad upload to S3.')
                 return 'Bad upload to S3.'
         else:
-            app.logger.warning("Incorrect file type.")
+            app.logger.info("Incorrect file type.")
             flash("Incorrect file type (Only accepted file types: 'png', 'jpg', 'jpeg', 'gif')")
             return 'No selected file'
 
