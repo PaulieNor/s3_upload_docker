@@ -1,5 +1,6 @@
 main:
 	export AWS_TFM_REMOTE_BUCKET_NAME = "s3-upload-tfm-{$RANDOM}"
+	export AWS_ACCOUNT_ID = {$aws sts get-caller-identity --query Account --output text}
 	
 	# Terraform resources
 	aws s3 create-bucket --bucket {$AWS_TFM_REMOTE_BUCKET_NAME} --region eu-west-2
@@ -17,3 +18,7 @@ main:
 	terraform plan
 
 	terraform apply
+
+	cd ../../helm
+
+	helm install jom . --set awsAccountID={$AWS_ACCOUNT_ID}

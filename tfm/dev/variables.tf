@@ -21,6 +21,10 @@ variable "account_id" {
   type = string
 }
 
+variable "upload_bucket_name" {
+  
+}
+
 variable "additional_tags" {
   
 

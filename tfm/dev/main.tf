@@ -1,6 +1,7 @@
 module "s3" {
   source = "../upload/s3"
   env    = var.env
+  upload_bucket_name = var.upload_bucket_name
 
 }
 
