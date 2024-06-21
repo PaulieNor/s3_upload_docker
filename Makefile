@@ -15,9 +15,9 @@ main:
 
 	cd ./tfm/dev
 	
-	terraform plan -var="upload_bucket_name=dev-s3-upload"
+	terraform plan -var="upload_bucket_name=dev-s3-upload" -var="account_id={$AWS_ACCOUNT_ID}"
 
-	terraform apply -var="upload_bucket_name=dev-s3-upload"
+	terraform apply -var="upload_bucket_name=dev-s3-upload" -var="account_id={$AWS_ACCOUNT_ID}"
 
 	cd ../../helm
 
