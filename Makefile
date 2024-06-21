@@ -21,4 +21,4 @@ main:
 
 	cd ../../helm
 
-	helm install jom . --set awsAccountID={$AWS_ACCOUNT_ID}
+	helm install s3 . --set awsAccountID={$AWS_ACCOUNT_ID}
