@@ -17,5 +17,3 @@ main:
 	terraform plan
 
 	terraform apply
-
-	kubectl annotate serviceaccount -n $namespace $service_account eks.amazonaws.com/role-arn=arn:aws:iam::$account_id:role/my-role
